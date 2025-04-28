@@ -1,0 +1,23 @@
+# Use a imagem oficial do OpenJDK como base
+FROM openjdk:17-jdk-slim
+
+# Defina o diretório de trabalho no container
+WORKDIR /app
+
+# Copie o arquivo pom.xml para o diretório de trabalho
+COPY projeto_clientes/pom.xml .
+
+# Baixe as dependências do Maven (para otimizar o cache)
+RUN mvn dependency:go-offline
+
+# Copie o código fonte do projeto para o diretório de trabalho
+COPY projeto_clientes/src ./src
+
+# Compile o projeto com Maven
+RUN mvn clean package -DskipTests
+
+# Exponha a porta que o Spring Boot irá usar
+EXPOSE 8080
+
+# Comando para rodar o aplicativo (ajuste o nome do JAR conforme necessário)
+CMD ["java", "-jar", "target/projeto-clientes-0.0.1-SNAPSHOT.jar"]
