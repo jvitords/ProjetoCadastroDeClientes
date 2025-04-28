@@ -14,7 +14,7 @@ import com.projetoclientes.model.Cliente;
 import com.projetoclientes.repository.ClienteRepository;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*") 
 public class ClienteController {
 
     @Autowired
